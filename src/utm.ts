@@ -25,3 +25,20 @@ export function withUtm(url: string): string {
     return url;
   }
 }
+
+// Meta Pixel InitiateCheckout on checkout buttons.
+type Fbq = (...args: unknown[]) => void;
+
+export function trackCheckout(e: React.MouseEvent<HTMLAnchorElement>, plan: string, price: string) {
+  const fbq = (window as unknown as { fbq?: Fbq }).fbq;
+  if (typeof fbq !== "function") return;
+  const value = parseFloat(price.replace(/[^0-9.]/g, "")) || 0;
+  fbq("track", "InitiateCheckout", { value, currency: "USD", content_name: plan, num_items: 1 });
+  // Same-tab click: wait a moment so the event is sent before leaving the page.
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+  const href = e.currentTarget.href;
+  e.preventDefault();
+  window.setTimeout(() => {
+    window.location.href = href;
+  }, 300);
+}
