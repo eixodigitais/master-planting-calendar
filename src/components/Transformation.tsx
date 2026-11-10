@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { CheckIcon, Eyebrow, H2, ImageSlot, InView, Section, prefersReducedMotion } from "./ui";
+import { CheckIcon, Eyebrow, H2, InView, Section, prefersReducedMotion } from "./ui";
 
 const Icon = {
   seed: (
@@ -108,20 +108,13 @@ export default function Transformation() {
         <H2 id="transf-title" dark>Your First Harvest Is Closer Than You Think.</H2>
       </div>
 
-      <div className="mt-12 grid items-start gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
+      <div className="mx-auto mt-12 max-w-3xl">
         <div>
           <Timeline />
           <p className="ml-[78px] mt-7 text-lg text-cream/95">
             <strong className="font-serif text-xl text-gold">And when others' beds sit empty?</strong> Yours are already sown for the next harvest.
           </p>
         </div>
-        <ImageSlot
-          file="transformation-basket.webp"
-          ratio="4/3"
-          alt="Hands holding a basket full of freshly harvested backyard vegetables"
-          desc="Hands holding a basket of fresh-picked backyard vegetables (4:3)"
-          className="shadow-warmlg lg:sticky lg:top-24"
-        />
       </div>
 
       <div className="mx-auto mt-14 max-w-3xl">
