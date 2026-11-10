@@ -4,6 +4,7 @@ import {
   PRICE_COMPLETE, PRICE_COMPLETE_ANCHOR, PRICE_DIFFERENCE,
 } from "../config";
 import { CheckIcon, Eyebrow, H2, InView, Section } from "./ui";
+import { withUtm } from "../utm";
 
 const basic: ReactNode[] = [
   "Master Planting Calendar — 365 days of planting, set to your zone",
@@ -80,7 +81,7 @@ export default function Plans() {
             <p className="text-bark">Total value: <s>{PRICE_COMPLETE_ANCHOR}</s></p>
             <p className="font-serif text-4xl font-extrabold text-forest">Today: {PRICE_COMPLETE}</p>
           </div>
-          <a href={CHECKOUT_COMPLETE} className="btn-cta pulse mt-5 w-full">YES, I WANT THE COMPLETE PLAN →</a>
+          <a href={withUtm(CHECKOUT_COMPLETE)} className="btn-cta pulse mt-5 w-full">YES, I WANT THE COMPLETE PLAN →</a>
         </article>
 
         {/* BASIC */}
@@ -92,7 +93,7 @@ export default function Plans() {
             <p className="text-bark"><s>{PRICE_BASIC_ANCHOR}</s></p>
             <p className="font-serif text-3xl font-extrabold text-forest">Today: {PRICE_BASIC}</p>
           </div>
-          <a href={CHECKOUT_BASIC} className="btn-outline mt-5 w-full">GET THE BASIC PLAN →</a>
+          <a href={withUtm(CHECKOUT_BASIC)} className="btn-outline mt-5 w-full">GET THE BASIC PLAN →</a>
         </article>
 
         <p className="order-2 rounded-[16px] border-2 border-dashed border-terracotta/60 bg-cream px-5 py-4 text-center text-lg lg:order-3 lg:col-span-2">
