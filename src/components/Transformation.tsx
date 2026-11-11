@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { CheckIcon, Eyebrow, H2, InView, Section, prefersReducedMotion } from "./ui";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { CheckIcon, H2, InView, Section, prefersReducedMotion } from "./ui";
 
 const Icon = {
   seed: (
@@ -11,27 +11,17 @@ const Icon = {
   radish: (
     <svg viewBox="0 0 40 40" className="h-9 w-9"><path d="M20 14c-7 0-10 6-8 12 2 5 5 8 8 11 3-3 6-6 8-11 2-6-1-12-8-12Z" fill="#D2556A" /><path d="M20 14c-2-5-6-8-10-8 1 5 4 7 10 8Zm0 0c2-5 6-8 10-8-1 5-4 7-10 8Z" fill="#7C9A6E" /></svg>
   ),
-  basket: (
-    <svg viewBox="0 0 40 40" className="h-9 w-9"><path d="M10 18c0-6 4-10 10-10s10 4 10 10" fill="none" stroke="#D9A441" strokeWidth="2.5" /><circle cx="15" cy="16" r="4" fill="#C8643B" /><circle cx="23" cy="15" r="4" fill="#7C9A6E" /><circle cx="27" cy="18" r="3" fill="#D9A441" /><path d="M6 18h28l-4 16H10Z" fill="#B88A4E" /><path d="M9 23h22M10 28h20" stroke="#8A6A4F" strokeWidth="1.5" /></svg>
-  ),
 };
 
-const steps: { label: string; text: ReactNode; icon: ReactNode }[] = [
-  { label: "Today.", text: <>You open the calendar to this month — and for the first time, you know <em>exactly</em> what to do. No tabs. No doubt.</>, icon: Icon.seed },
-  { label: "This week.", text: <>The right seeds go in on the right day, at the right depth. Not "around now." Not three weeks late.</>, icon: Icon.sprout },
-  { label: "In about a month.", text: <>Your first radishes are ready to pull — the fastest crop in the book, and your first proof that this works.</>, icon: Icon.radish },
-  { label: "This season.", text: <>Lettuce, herbs, peas, tomatoes, one after the other. You walk out with a bowl and come back with dinner.</>, icon: Icon.basket },
+const steps: { label: string; text: string; icon: ReactNode }[] = [
+  { label: "Today", text: "you know what to do.", icon: Icon.seed },
+  { label: "This week", text: "the right seeds go in.", icon: Icon.sprout },
+  { label: "In about a month", text: "your first radishes are ready.", icon: Icon.radish },
 ];
 
-const wins: ReactNode[] = [
-  <><strong>You eat what you grow</strong> — fresher, cleaner, and picked the same day it hits your plate.</>,
-  <><strong>You spend less at the grocery store</strong> — and it adds up month after month.</>,
-  <><strong>You stop wasting money</strong> on seeds that never sprout and seedlings that die young.</>,
-  <><strong>You actually relax in your garden</strong> — because you already know what to do.</>,
-  <><strong>You feel proud</strong> every time a neighbor stops and asks, <em>"How do you grow all that?"</em></>,
-];
+const wins = ["Eat what you grow", "Spend less at the store", "Stop wasting seeds", "Feel proud of your garden"];
 
-/** Animation 6 — a sun travels down the timeline with scroll; each step's icon pops in as it passes. */
+/** Animation 6 — a sun travels along the timeline as you scroll (horizontal on desktop, vertical on mobile). */
 function Timeline() {
   const wrap = useRef<HTMLDivElement | null>(null);
   const [p, setP] = useState(0);
@@ -46,8 +36,10 @@ function Timeline() {
       const el = wrap.current;
       if (!el) return;
       const r = el.getBoundingClientRect();
-      const anchor = window.innerHeight * 0.6;
-      setP(Math.max(0, Math.min(1, (anchor - r.top) / r.height)));
+      const vh = window.innerHeight;
+      // starts when the timeline enters the lower part of the screen, completes when it reaches ~45% from the top
+      const prog = (vh * 0.85 - r.top) / (vh * 0.4);
+      setP(Math.max(0, Math.min(1, prog)));
     };
     const on = () => { if (!raf) raf = requestAnimationFrame(update); };
     update();
@@ -60,16 +52,16 @@ function Timeline() {
     };
   }, []);
 
+  const vars = { "--p": p } as CSSProperties;
   return (
-    <div ref={wrap} className="relative">
-      {/* track */}
-      <div aria-hidden="true" className="absolute bottom-6 left-[27px] top-6 w-[3px] rounded bg-cream/20" />
-      <div aria-hidden="true" className="absolute left-[27px] top-6 w-[3px] rounded bg-gold" style={{ height: `calc((100% - 48px) * ${p})` }} />
+    <div ref={wrap} className="relative mx-auto max-w-4xl" style={vars}>
+      {/* track — vertical (mobile) / horizontal (desktop) */}
+      <div aria-hidden="true" className="absolute bottom-6 left-[27px] top-6 w-[3px] rounded bg-cream/20 md:bottom-auto md:left-[16.66%] md:right-[16.66%] md:top-[28px] md:h-[3px] md:w-auto" />
+      <div aria-hidden="true" className="absolute left-[27px] top-6 h-[calc((100%-48px)*var(--p))] w-[3px] rounded bg-gold md:left-[16.66%] md:top-[28px] md:h-[3px] md:w-[calc(66.68%*var(--p))]" />
       {/* sun */}
       <div
         aria-hidden="true"
-        className="absolute left-[12px] z-[2] h-[34px] w-[34px]"
-        style={{ top: `calc(24px + (100% - 48px) * ${p} - 17px)` }}
+        className="absolute left-[12px] top-[calc(24px+(100%-48px)*var(--p)-17px)] z-[2] h-[34px] w-[34px] md:left-[calc(16.66%+66.68%*var(--p)-17px)] md:top-[12px]"
       >
         <svg viewBox="0 0 40 40" className="h-full w-full drop-shadow-[0_0_10px_rgba(217,164,65,0.7)]">
           <g stroke="#D9A441" strokeWidth="2.5" strokeLinecap="round">
@@ -81,16 +73,16 @@ function Timeline() {
         </svg>
       </div>
 
-      <ol className="space-y-7">
+      <ol className="space-y-7 md:grid md:grid-cols-3 md:gap-6 md:space-y-0">
         {steps.map((s, i) => {
-          const active = p >= i / steps.length + 0.02 || p >= 0.999;
+          const active = p >= (i / (steps.length - 1)) * 0.97;
           return (
-            <li key={s.label} className={`tl-step flex gap-5 ${active ? "active" : "opacity-60"}`}>
+            <li key={s.label} className={`tl-step flex items-center gap-5 md:flex-col md:items-center md:gap-4 md:text-center ${active ? "active" : "opacity-60"}`}>
               <span className="relative z-[1] flex h-[58px] w-[58px] shrink-0 items-center justify-center rounded-full border-2 border-cream/25 bg-[#36553C]">
                 <span className="tl-icon" aria-hidden="true">{s.icon}</span>
               </span>
-              <p className="pt-1 text-lg text-cream/95">
-                <strong className="font-serif text-xl text-gold">{s.label}</strong> {s.text}
+              <p className="text-lg text-cream/95">
+                <strong className="font-serif text-xl text-gold">{s.label}</strong> — {s.text}
               </p>
             </li>
           );
@@ -104,35 +96,24 @@ export default function Transformation() {
   return (
     <Section bg="forest" labelledBy="transf-title">
       <div className="mx-auto max-w-3xl text-center">
-        <Eyebrow dark>HERE'S WHAT CHANGES — STARTING TODAY</Eyebrow>
         <H2 id="transf-title" dark>Your First Harvest Is Closer Than You Think.</H2>
       </div>
 
-      <div className="mx-auto mt-12 max-w-3xl">
-        <div>
-          <Timeline />
-          <p className="ml-[78px] mt-7 text-lg text-cream/95">
-            <strong className="font-serif text-xl text-gold">And when others' beds sit empty?</strong> Yours are already sown for the next harvest.
-          </p>
-        </div>
+      <div className="mt-12">
+        <Timeline />
       </div>
 
-      <div className="mx-auto mt-14 max-w-3xl">
-        <p className="text-lg text-cream">This is what happens when you stop guessing:</p>
-        <InView as="ul" className="mt-5 space-y-3.5">
-          {wins.map((w, i) => (
-            <li key={i} className="flex items-start gap-3 text-lg text-cream/95">
-              <CheckIcon index={i} color="#B9CFAB" className="mt-1 h-6 w-6" />
-              <span>{w}</span>
-            </li>
-          ))}
-        </InView>
-      </div>
+      <InView as="ul" className="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
+        {wins.map((w, i) => (
+          <li key={w} className="flex items-center gap-3 rounded-[14px] bg-cream/[0.06] px-4 py-3 text-lg font-semibold text-cream">
+            <CheckIcon index={i} color="#B9CFAB" className="h-6 w-6" />
+            <span>{w}</span>
+          </li>
+        ))}
+      </InView>
 
-      <p className="mx-auto mt-14 max-w-3xl text-center font-serif text-2xl font-bold leading-snug text-gold sm:text-[2rem]">
-        The difference between a garden that disappoints and one that feeds your family isn't luck, land or a green thumb.
-        <br />
-        It's knowing what to do — and when.
+      <p className="mx-auto mt-12 max-w-3xl text-center font-serif text-2xl font-bold leading-snug text-gold sm:text-[2rem]">
+        It's not luck or a green thumb. It's knowing what to do — and when.
       </p>
     </Section>
   );

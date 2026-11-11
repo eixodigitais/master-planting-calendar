@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { Eyebrow, H2, InView, Section } from "./ui";
+import { H2, InView, Section } from "./ui";
 
 const rows = [
   ["Zone 3", "4 weeks later", "Northern Minnesota, North Dakota", "Short season — favor fast varieties"],
@@ -16,19 +16,12 @@ const heads = ["Your zone", "Shift every date", "Where you'll find it (examples)
 export default function Zone() {
   return (
     <Section bg="cream" labelledBy="zone-title">
-      <div className="max-w-3xl">
-        <div>
-          <Eyebrow>"BUT WILL IT WORK WHERE I LIVE?"</Eyebrow>
-          <H2 id="zone-title">Yes. Find Your Zone — and Every Date Is Right for Your Garden.</H2>
-          <p className="mt-5 text-lg">
-            A planting calendar that ignores your climate is just a pretty poster. This one is built around the USDA Hardiness Zones — the same system on every seed packet and at every garden center you've ever walked into.
-          </p>
-          <p className="mt-4 text-lg"><strong className="text-forest">Find your zone. Shift the dates. Done in one minute.</strong></p>
-        </div>
+      <div className="mx-auto max-w-3xl text-center">
+        <H2 id="zone-title">Works Where You Live — USDA Zones 3–10</H2>
       </div>
 
       {/* desktop table */}
-      <InView className="mt-12 hidden overflow-hidden rounded-[18px] bg-[#FBF8F1] shadow-warm md:block" threshold={0.15}>
+      <InView className="mt-10 hidden overflow-hidden rounded-[18px] bg-[#FBF8F1] shadow-warm md:block" threshold={0.15}>
         <table className="w-full text-left text-[0.98rem]">
           <thead className="bg-forest text-cream">
             <tr>{heads.map((h) => <th key={h} scope="col" className="px-5 py-4 font-bold">{h}</th>)}</tr>
@@ -67,17 +60,12 @@ export default function Zone() {
       </InView>
 
       <p className="mt-8 text-center text-lg">
-        <strong className="text-forest">Don't know your zone?</strong> Type your ZIP code into the{" "}
+        Don't know your zone? Enter your ZIP code on the{" "}
         <a href="https://planthardiness.ars.usda.gov/" target="_blank" rel="noopener noreferrer" className="font-bold text-clay underline decoration-2 underline-offset-2 hover:text-forest">
-          official USDA zone map
-        </a>
-        . It takes ten seconds.
+          official USDA map
+        </a>{" "}
+        — it takes 10 seconds.
       </p>
-
-      <div className="mx-auto mt-8 max-w-3xl rounded-[18px] border-2 border-gold bg-gold/10 p-6 text-lg">
-        <span aria-hidden="true">🎁 </span>
-        <em>Prefer zero math? The Complete Plan includes <strong>Your Zone, Pre-Set</strong>: a calendar with every date already adjusted to your zone. Find your page, print it, plant.</em>
-      </div>
     </Section>
   );
 }

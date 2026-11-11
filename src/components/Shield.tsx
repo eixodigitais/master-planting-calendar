@@ -1,7 +1,4 @@
-import { Eyebrow, H2, Section } from "./ui";
-
-/** Animation 10 — shield seal with a shine sweeping across every 5s. */
-function Shield() {
+export default function Shield() {
   return (
     <svg viewBox="0 0 200 230" role="img" aria-label="7-day money-back guarantee seal" className="h-full w-full drop-shadow-[0_10px_20px_rgba(59,47,37,0.18)]">
       <defs>
@@ -25,28 +22,5 @@ function Shield() {
         <rect className="shine" x="0" y="-20" width="60" height="270" fill="url(#shineGrad)" />
       </g>
     </svg>
-  );
-}
-
-export default function Guarantee() {
-  return (
-    <Section bg="cream" labelledBy="guar-title">
-      <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[240px_1fr] md:gap-14">
-        <div className="mx-auto h-60 w-52 md:h-72 md:w-60">
-          <Shield />
-        </div>
-        <div>
-          <Eyebrow>🛡️ THE "TRY IT IN YOUR GARDEN" GUARANTEE</Eyebrow>
-          <H2 id="guar-title">Use It for 7 Days. Love It — or Pay Nothing.</H2>
-          <p className="mt-5 text-lg">Open the calendar. Find your zone. Flip to this month and see exactly what to do today.</p>
-          <p className="mt-4 text-lg">
-            If, within 7 days, you don't feel that this is the clearest, most useful planting plan you've ever had, just send us one email. <strong className="text-forest">You'll get every cent back. No questions. No hard feelings.</strong>
-          </p>
-          <p className="mt-4 text-lg">
-            You either get a garden that finally works — or your money back. <strong className="text-forest">The only way to lose is to keep guessing.</strong>
-          </p>
-        </div>
-      </div>
-    </Section>
   );
 }

@@ -1,17 +1,17 @@
 import { useRef, useState, type ReactNode } from "react";
-import { Eyebrow, H2, ImageSlot, Section } from "./ui";
+import { H2, ImageSlot, Section } from "./ui";
 import KeyDates from "./KeyDates";
 import Lightbox from "./Lightbox";
 
 type Item = { icon: string; title: string; body: ReactNode; file: string; alt: string; desc: string; fallback?: ReactNode };
 
 const items: Item[] = [
-  { icon: "🌱", title: "Every month, mapped out", body: <>What to start, what's ready to pick right now, and this month's to-do list — with the soil and exact sowing depth for every crop. Zero research required.</>, file: "inside-month.webp", alt: "A full monthly planting page from the calendar (March)", desc: "Real month page, e.g. March (3:4)" },
-  { icon: "📅", title: "All 365 days, already decided", body: <>Every day of the month on one grid. Colored dots tell you what you can sow, plant or harvest — <em>that exact day</em>.</>, file: "inside-grid.webp", alt: "Close-up of the daily planting grid with colored dots", desc: "Close-up of the day grid with colored dots (3:4)" },
-  { icon: "⭕", title: "The dates that make or break your harvest", body: <>The day each planting window opens, circled. Miss it and the crop never catches up. Now you won't.</>, file: "inside-keydates.webp", alt: "Close-up of the circled key planting dates", desc: "Close-up of the circled key dates (3:4)", fallback: <KeyDates /> },
-  { icon: "📖", title: "Every answer on one page", body: <>Sowing depth, watering, soil and what grows well side by side. The mistakes that kill most gardens — fixed before you make them.</>, file: "inside-reference.webp", alt: "A reference page showing how deep to sow each seed", desc: "Reference page, e.g. \"How deep to sow\" (3:4)" },
-  { icon: "✏️", title: "The gardener's checklist", body: <>Print it. Pin it up. Tick it off. Watch your garden run like clockwork.</>, file: "inside-checklist.webp", alt: "The printed gardener's checklist held on a fridge with a magnet", desc: "Printed checklist on the fridge with a magnet (3:4)" },
-];
+  { icon: "🌱", title: "Every month mapped out", body: <>what to start, pick and do</>, file: "inside-month.webp", alt: "A full monthly planting page from the calendar", desc: "Month page (3:4)" },
+  { icon: "📅", title: "All 365 days decided", body: <>colored dots show what to do each day</>, file: "inside-grid.webp", alt: "Close-up of the daily planting grid with colored dots", desc: "Day grid (3:4)" },
+  { icon: "⭕", title: "Key dates circled", body: <>never miss a planting window</>, file: "inside-keydates.webp", alt: "Close-up of the circled key planting dates", desc: "Key dates (3:4)", fallback: <KeyDates /> },
+  { icon: "📖", title: "Every answer on one page", body: <>depth, soil, watering</>, file: "inside-reference.webp", alt: "A reference page showing how deep to sow each seed", desc: "Reference page (3:4)" },
+  { icon: "✏️", title: "Printable checklist", body: <>pin it up, tick it off</>, file: "inside-checklist.webp", alt: "The printed gardener's checklist held on a fridge with a magnet", desc: "Checklist (3:4)" },
+]
 
 function ShowCard({ item, onOpen, className = "" }: { item: Item; onOpen: (i: Item) => void; className?: string }) {
   const [ok, setOk] = useState(false);
@@ -32,7 +32,7 @@ function ShowCard({ item, onOpen, className = "" }: { item: Item; onOpen: (i: It
           <span aria-hidden="true">{item.icon} </span>
           {item.title}
         </h3>
-        <p className="mt-2 text-[0.98rem] text-bark">{item.body}</p>
+        <p className="mt-1 text-[0.98rem] text-bark">{item.body}</p>
       </div>
     </article>
   );
@@ -61,11 +61,7 @@ export default function Showcase() {
   return (
     <Section bg="linen" labelledBy="look-title">
       <div className="mx-auto max-w-3xl text-center">
-        <Eyebrow>TAKE A LOOK INSIDE</Eyebrow>
-        <H2 id="look-title">This Is What "Never Guessing Again" Looks Like.</H2>
-        <p className="mt-5 text-lg text-soil">
-          No fluff. No 40-minute videos. No digging through seed packets. Just open the page — and the answer is right there.
-        </p>
+        <H2 id="look-title">Open Any Month. The Answer Is Right There.</H2>
       </div>
 
       <div
@@ -96,10 +92,6 @@ export default function Showcase() {
           </button>
         ))}
       </div>
-
-      <p className="mx-auto mt-8 max-w-2xl text-center text-lg italic text-bark">
-        Beautifully illustrated, made to live on your fridge or in your shed — not buried in a folder you'll never open.
-      </p>
 
       {open && <Lightbox src={`/images/${open.file}`} alt={open.alt} onClose={() => setOpen(null)} />}
     </Section>

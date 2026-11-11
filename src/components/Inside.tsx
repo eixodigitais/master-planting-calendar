@@ -1,5 +1,5 @@
-import { useEffect, useState, type ReactNode } from "react";
-import { Eyebrow, H2, Section, prefersReducedMotion, useInView } from "./ui";
+import { useEffect, useState } from "react";
+import { H2, InView, Section, prefersReducedMotion, useInView } from "./ui";
 
 function Counter({ to, start }: { to: number; start: boolean }) {
   const [n, setN] = useState(0);
@@ -30,35 +30,22 @@ const stats: [number, string][] = [
   [5, "reference pages"],
 ];
 
-const cards: { icon: string; title: string; body: ReactNode }[] = [
-  { icon: "📅", title: "12 Month-by-Month Planting Pages", body: "From deep winter to the last fall harvest. Each month tells you what to start, what to transplant, what to pick — and the jobs that keep your garden ahead of the season." },
-  { icon: "🗓️", title: "The 365-Day Planting Grid", body: "Every single day of the year, decided for you. Glance at today's date and you know exactly what's possible: sow indoors, sow outdoors, transplant or harvest." },
-  { icon: "⭕", title: "Key Dates That Protect Your Harvest", body: "The opening day of every planting window, circled. The dates that decide whether you harvest a basket — or a handful." },
-  { icon: "🥕", title: "36 Crops — From Seed to Plate", body: "Tomatoes, peppers, lettuce, carrots, zucchini, garlic, potatoes, kale, beans, basil and more. Each with its ideal soil, sowing depth and harvest window." },
-  {
-    icon: "📖",
-    title: "5 Quick-Answer Reference Pages",
-    body: (
-      <ul className="mt-1 space-y-1.5">
-        <li>→ <strong>How deep to sow</strong> every seed (the #1 reason seeds fail)</li>
-        <li>→ <strong>What grows well side by side</strong> — and what to keep apart</li>
-        <li>→ <strong>How often to water</strong> each crop, without drowning it or drying it out</li>
-        <li>→ <strong>Know your soil</strong> — plus the simple jar test that tells you what you're working with</li>
-        <li>→ <strong>Pick it at its best</strong> — the pro tricks for bigger, longer harvests</li>
-      </ul>
-    ),
-  },
-  { icon: "✏️", title: "The Printable Gardener's Checklist", body: "Every essential task, season by season. Print it, pin it up, tick it off." },
-  { icon: "🌎", title: "Set to Your Climate", body: <>Adjusts to USDA Zones 3–10 in one minute — so every date in the book is right for <em>your</em> backyard.</> },
+const items: [string, string][] = [
+  ["📅", "12 monthly planting pages"],
+  ["🗓️", "365-day planting grid"],
+  ["🥕", "36 crops"],
+  ["📖", "5 reference pages"],
+  ["✏️", "Printable checklist"],
 ];
+
+const steps = ["Find your zone", "Open this month", "Do what today says."];
 
 export default function Inside() {
   const { ref, inView } = useInView<HTMLDivElement>(0.4);
   return (
     <Section bg="linen" labelledBy="inside-title">
       <div className="mx-auto max-w-3xl text-center">
-        <Eyebrow>EVERYTHING YOUR GARDEN NEEDS. ONE PLACE.</Eyebrow>
-        <H2 id="inside-title">Inside the Master Planting Calendar</H2>
+        <H2 id="inside-title">Everything Your Garden Needs. One Place.</H2>
       </div>
 
       <div ref={ref} className="mt-10 grid grid-cols-2 gap-3 rounded-[20px] bg-forest p-5 text-cream shadow-warm sm:gap-4 md:grid-cols-4 md:p-7">
@@ -72,15 +59,38 @@ export default function Inside() {
         ))}
       </div>
 
-      <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {cards.map((c, i) => (
-          <article key={c.title} className={`card card-lift p-6 ${i === 4 ? "md:row-span-2" : ""}`}>
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sage/20 text-2xl" aria-hidden="true">{c.icon}</div>
-            <h3 className="mt-4 font-serif text-xl font-bold text-forest">{c.title}</h3>
-            <div className="mt-2 text-bark">{c.body}</div>
-          </article>
+      <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        {items.map(([icon, label], i) => (
+          <li
+            key={label}
+            className={`card flex items-center gap-3 px-4 py-3 font-semibold text-forest ${i === items.length - 1 ? "col-span-2 justify-center sm:col-span-1 sm:justify-start" : ""}`}
+          >
+            <span aria-hidden="true" className="text-xl">{icon}</span>
+            <span className="leading-snug">{label}</span>
+          </li>
         ))}
-      </div>
+      </ul>
+
+      <InView className="relative mx-auto mt-14 max-w-4xl" threshold={0.3}>
+        <svg aria-hidden="true" className="dotgrow-h absolute left-0 top-[36px] hidden h-4 w-full md:block" viewBox="0 0 1000 16" preserveAspectRatio="none">
+          <path d="M170 8 H 830" stroke="#C8643B" strokeWidth="3" strokeDasharray="2 12" fill="none" strokeLinecap="round" />
+        </svg>
+        <svg aria-hidden="true" className="dotgrow-v absolute left-[35px] top-10 h-[calc(100%-80px)] w-4 md:hidden" viewBox="0 0 16 1000" preserveAspectRatio="none">
+          <path d="M8 0 V 1000" stroke="#C8643B" strokeWidth="3" strokeDasharray="2 14" fill="none" strokeLinecap="round" />
+        </svg>
+        <ol className="relative grid gap-6 md:grid-cols-3">
+          {steps.map((t, i) => (
+            <li key={t} className="flex items-center gap-4 md:flex-col md:text-center">
+              <span className="relative z-[1] flex h-[86px] w-[86px] shrink-0 items-center justify-center rounded-full border-2 border-dashed border-terracotta/50 bg-linen font-serif text-5xl font-extrabold text-terracotta md:h-[88px] md:w-[88px] md:text-6xl">
+                {i + 1}
+              </span>
+              <strong className="font-serif text-xl text-forest md:mt-1">{t}</strong>
+            </li>
+          ))}
+        </ol>
+      </InView>
+
+      <p className="mt-8 text-center text-lg font-semibold text-forest">One minute a day. No research. No guessing.</p>
     </Section>
   );
 }
