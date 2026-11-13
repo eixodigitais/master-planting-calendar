@@ -24,7 +24,10 @@ if (cssLink) {
   html = html.replace(cssLink[0], `<style>${css}</style>`);
 }
 
-// 3. Preload the hero (LCP) image first, then the fonts used above the fold
+// 3. App script at low priority (the HTML is already rendered; JS only adds interactivity)
+html = html.replace(/<script type="module" crossorigin src=/, '<script type="module" fetchpriority="low" crossorigin src=');
+
+// 4. Preload the hero (LCP) image first, then the fonts used above the fold
 const assets = readdirSync(resolve(dist, "assets"));
 const fontFiles = [
   /^fraunces-latin-opsz-normal-.*\.woff2$/,

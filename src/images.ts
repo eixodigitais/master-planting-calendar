@@ -3,8 +3,8 @@ export type ImageInfo = { src: string; srcSet: string; width: number; height: nu
 
 export const IMAGES: Record<string, ImageInfo> = {
   "hero-mockup.webp": {
-    "src": "/img/hero-mockup-1200-27216bb8.webp",
-    "srcSet": "/img/hero-mockup-480-876ec422.webp 480w, /img/hero-mockup-720-a0e19645.webp 720w, /img/hero-mockup-960-5b951e3b.webp 960w, /img/hero-mockup-1200-27216bb8.webp 1200w",
+    "src": "/img/hero-mockup-1200-84fe3945.webp",
+    "srcSet": "/img/hero-mockup-480-1bf9f4f3.webp 480w, /img/hero-mockup-600-ade43bcd.webp 600w, /img/hero-mockup-760-443d9543.webp 760w, /img/hero-mockup-960-501d1a26.webp 960w, /img/hero-mockup-1200-84fe3945.webp 1200w",
     "width": 1200,
     "height": 900
   },

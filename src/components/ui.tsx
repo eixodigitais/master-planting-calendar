@@ -230,7 +230,7 @@ export function ImageSlot({
           alt={alt}
           loading={eager ? "eager" : "lazy"}
           decoding={eager ? "sync" : "async"}
-          {...(eager ? { fetchpriority: "high" } : {})}
+          {...{ fetchpriority: eager ? "high" : "low" }}
           onLoad={() => done(true)}
           onError={() => done(false)}
           className={`absolute inset-0 h-full w-full object-cover ${eager ? "" : "transition-opacity duration-500"} ${visible ? "opacity-100" : "opacity-0"}`}
