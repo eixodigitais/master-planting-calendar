@@ -3,6 +3,7 @@ import { renderToString } from "react-dom/server";
 import App from "./App";
 
 export { IMAGES } from "./images";
+export { HERO_SIZES } from "./components/Hero";
 
 /** Used at build time to prerender the page into dist/index.html (see scripts/prerender.mjs). */
 export function render(): string {

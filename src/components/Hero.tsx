@@ -7,14 +7,18 @@ const bullets = [
   <>Harvest something every month — and spend less at the store</>,
 ];
 
+// Must match the hero preload in scripts/prerender.mjs.
+export const HERO_SIZES = "(min-width: 1024px) 512px, (min-width: 640px) calc(100vw - 48px), 300px";
+
 export default function Hero() {
   return (
     <section id="top" aria-labelledby="hero-title" className="paper relative overflow-hidden bg-cream pt-14">
       <LeafBranch className="absolute -left-4 top-14 h-32 w-24 opacity-70 sm:h-44 sm:w-32" />
       <LeafBranch flip className="absolute -right-4 top-14 h-32 w-24 opacity-70 sm:h-44 sm:w-32" tone="#4F7A3A" />
 
-      <div className="relative z-[1] mx-auto grid max-w-6xl items-center gap-10 px-4 pb-14 pt-8 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-14 lg:pb-20 lg:pt-14">
-        <div>
+      {/* One hero image for all screen sizes: on desktop the grid moves it to the right column. */}
+      <div className="relative z-[1] mx-auto grid max-w-6xl px-4 pb-14 pt-8 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-x-14 lg:pb-20 lg:pt-14">
+        <div className="lg:col-start-1 lg:row-start-1 lg:self-end">
           <Sprout className="mx-auto mb-2 hidden h-32 w-32 md:block lg:mx-0 lg:-ml-3" />
           <h1 id="hero-title" className="text-center font-serif text-[2.35rem] font-extrabold leading-[1.08] text-forest sm:text-5xl lg:text-left lg:text-[3.6rem]">
             Your Seeds Didn't Fail. Your Timing Did.
@@ -22,19 +26,21 @@ export default function Hero() {
           <p className="mt-5 text-center text-lg text-soil lg:text-left">
             Know exactly what to sow, plant and harvest — every day of the year — set to your USDA zone.
           </p>
+        </div>
 
-          <div className="mt-7 lg:hidden">
-            <ImageSlot
-              file="hero-mockup.webp"
-              sizes="(min-width: 1024px) 512px, calc(100vw - 32px)"
-              ratio="4/3"
-              eager
-              alt="The Master Planting Calendar printed and open to a month, with a phone showing the cover, on a wooden table with seedlings"
-              desc="Printed book open to a month + phone showing the cover, on a wooden table with seedlings (4:3)"
-              className="shadow-warmlg"
-            />
-          </div>
+        <div className="mt-7 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:self-center">
+          <ImageSlot
+            file="hero-mockup.webp"
+            sizes={HERO_SIZES}
+            ratio="4/3"
+            eager
+            alt="The Master Planting Calendar printed and open to a month, with a phone showing the cover, on a wooden table with seedlings"
+            desc="Printed book open to a month + phone showing the cover, on a wooden table with seedlings (4:3)"
+            className="shadow-warmlg"
+          />
+        </div>
 
+        <div className="lg:col-start-1 lg:row-start-2 lg:self-start">
           <InView as="ul" className="mt-7 space-y-3">
             {bullets.map((b, i) => (
               <li key={i} className="flex items-start gap-3 font-semibold text-soil">
@@ -50,18 +56,6 @@ export default function Hero() {
               Instant access · Print it or use it on your phone · Zones 3–10
             </p>
           </div>
-        </div>
-
-        <div className="hidden lg:block">
-          <ImageSlot
-            file="hero-mockup.webp"
-              sizes="(min-width: 1024px) 512px, calc(100vw - 32px)"
-            ratio="4/3"
-            eager
-            alt="The Master Planting Calendar printed and open to a month, with a phone showing the cover, on a wooden table with seedlings"
-            desc="Printed book open to a month + phone showing the cover, on a wooden table with seedlings (4:3)"
-            className="shadow-warmlg"
-          />
         </div>
       </div>
     </section>
