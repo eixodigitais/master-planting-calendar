@@ -33,7 +33,7 @@ export default function Plans() {
       </div>
 
       <div className="mx-auto mt-12 grid max-w-4xl items-center gap-8 md:grid-cols-[0.85fr_1.15fr]">
-        <article className="relative order-1 rounded-[22px] border-[3px] border-terracotta bg-[#FBF8F1] p-6 pt-8 text-center shadow-warmlg sm:p-8 md:order-2">
+        <article className="relative order-2 rounded-[22px] border-[3px] border-terracotta bg-[#FBF8F1] p-6 pt-8 text-center shadow-warmlg sm:p-8">
           <span className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gold px-4 py-1.5 text-[13px] font-extrabold tracking-wider text-soil shadow-warm">
             ⭐ MOST POPULAR
           </span>
@@ -46,7 +46,7 @@ export default function Plans() {
           <a href={withUtm(CHECKOUT_COMPLETE)} onClick={(e) => trackCheckout(e, "Complete Plan", PRICE_COMPLETE)} className="btn-cta pulse mt-6 w-full">YES, I WANT THE COMPLETE PLAN →</a>
         </article>
 
-        <article className="order-2 rounded-[20px] bg-[#FBF8F1] p-6 text-center shadow-warm sm:p-8 md:order-1">
+        <article className="order-1 rounded-[20px] bg-[#FBF8F1] p-6 text-center shadow-warm sm:p-8">
           <h3 className="font-serif text-2xl font-extrabold text-forest">🌱 BASIC</h3>
           <p className="mt-2 text-bark">The calendar · Lifetime access + updates</p>
           <p className="mt-5 flex items-baseline justify-center gap-3">

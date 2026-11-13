@@ -15,7 +15,7 @@ export default function Hero() {
 
       <div className="relative z-[1] mx-auto grid max-w-6xl items-center gap-10 px-4 pb-14 pt-8 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-14 lg:pb-20 lg:pt-14">
         <div>
-          <Sprout className="mx-auto mb-2 h-28 w-28 sm:h-32 sm:w-32 lg:mx-0 lg:-ml-3" />
+          <Sprout className="mx-auto mb-2 hidden h-32 w-32 md:block lg:mx-0 lg:-ml-3" />
           <h1 id="hero-title" className="text-center font-serif text-[2.35rem] font-extrabold leading-[1.08] text-forest sm:text-5xl lg:text-left lg:text-[3.6rem]">
             Your Seeds Didn't Fail. Your Timing Did.
           </h1>

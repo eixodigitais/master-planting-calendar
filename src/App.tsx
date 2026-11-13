@@ -10,7 +10,6 @@ import Plans from "./components/Plans";
 import Faq from "./components/Faq";
 import Closing from "./components/Closing";
 import Footer from "./components/Footer";
-import StickyBar from "./components/StickyBar";
 import { VineDivider } from "./components/ui";
 
 const CREAM = "#F7F2E7";
@@ -43,7 +42,6 @@ export default function App() {
         <Closing />
       </main>
       <Footer />
-      <StickyBar />
     </>
   );
 }
