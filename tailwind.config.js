@@ -17,7 +17,7 @@ export default {
         leaf: "#4F7A3A",
       },
       fontFamily: {
-        serif: ['Fraunces', 'Georgia', 'serif'],
+        serif: ['"Fraunces Variable"', 'Fraunces', 'Georgia', 'serif'],
         sans: ['"Nunito Sans"', 'system-ui', 'sans-serif'],
       },
       boxShadow: {

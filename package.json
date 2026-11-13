@@ -5,10 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/fraunces": "^5.1.0",
+    "@fontsource/fraunces": "^5.1.0",
+    "@fontsource/nunito-sans": "^5.1.0",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },

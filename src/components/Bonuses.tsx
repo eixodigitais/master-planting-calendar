@@ -18,7 +18,7 @@ export default function Bonuses() {
       <ul className="mx-auto mt-10 max-w-3xl space-y-3">
         {bonuses.map((b) => (
           <li key={b.file} className="card card-lift flex items-center gap-4 p-3 sm:gap-5 sm:p-4">
-            <ImageSlot file={b.file} ratio="1/1" alt={b.alt} desc="" compact className="w-[72px] shrink-0 rounded-[10px] sm:w-[88px]" />
+            <ImageSlot file={b.file} ratio="1/1" alt={b.alt} desc="" compact sizes="(min-width: 640px) 88px, 72px" className="w-[72px] shrink-0 rounded-[10px] sm:w-[88px]" />
             <p className="min-w-0 flex-1 leading-snug">
               <span aria-hidden="true">🎁 </span>
               <strong className="font-serif text-lg text-forest">{b.title}</strong>

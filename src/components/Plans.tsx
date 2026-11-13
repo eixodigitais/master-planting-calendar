@@ -4,6 +4,7 @@ import {
 } from "../config";
 import { H2, Section } from "./ui";
 import Shield from "./Shield";
+import { useEffect, useState } from "react";
 import { trackCheckout, withUtm } from "../utm";
 
 const num = (p: string) => parseFloat(p.replace(/[^0-9.]/g, "")) || 0;
@@ -41,6 +42,11 @@ function Locks() {
 }
 
 export default function Plans() {
+  // Checkout links get the page's UTM params after hydration (prerendered HTML has the plain links).
+  const [links, setLinks] = useState({ basic: CHECKOUT_BASIC, complete: CHECKOUT_COMPLETE });
+  useEffect(() => {
+    setLinks({ basic: withUtm(CHECKOUT_BASIC), complete: withUtm(CHECKOUT_COMPLETE) });
+  }, []);
   return (
     <Section id="plans" bg="linen" labelledBy="plans-title" className="scroll-mt-14">
       <div className="mx-auto max-w-3xl text-center">
@@ -73,7 +79,7 @@ export default function Plans() {
           <p className="mt-3 inline-block rounded-full bg-leaf/10 px-4 py-1.5 text-[15px] font-extrabold text-leaf">
             You save {fmt(savings)} — {savingsPct}% off
           </p>
-          <a href={withUtm(CHECKOUT_COMPLETE)} onClick={(e) => trackCheckout(e, "Complete Plan", PRICE_COMPLETE)} className="btn-cta pulse mt-6 w-full">YES, I WANT THE COMPLETE PLAN →</a>
+          <a href={links.complete} onClick={(e) => trackCheckout(e, "Complete Plan", PRICE_COMPLETE)} className="btn-cta pulse mt-6 w-full">YES, I WANT THE COMPLETE PLAN →</a>
         </article>
 
         <article className="order-1 rounded-[20px] bg-[#FBF8F1] p-6 text-center shadow-warm sm:p-8">
@@ -83,7 +89,7 @@ export default function Plans() {
             <s className="text-xl text-bark">{PRICE_BASIC_ANCHOR}</s>
             <strong className="font-serif text-4xl font-extrabold text-forest">{PRICE_BASIC}</strong>
           </p>
-          <a href={withUtm(CHECKOUT_BASIC)} onClick={(e) => trackCheckout(e, "Basic Plan", PRICE_BASIC)} className="btn-outline mt-6 w-full">GET BASIC →</a>
+          <a href={links.basic} onClick={(e) => trackCheckout(e, "Basic Plan", PRICE_BASIC)} className="btn-outline mt-6 w-full">GET BASIC →</a>
         </article>
       </div>
 

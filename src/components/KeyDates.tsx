@@ -10,7 +10,7 @@ export default function KeyDates() {
     <InView className="keydates h-full w-full bg-[#FBF8F1]" threshold={0.4}>
       <svg viewBox="0 0 240 320" role="img" aria-label="A mini monthly calendar with a key planting date circled in gold" className="h-full w-full">
         <rect x="0" y="0" width="240" height="320" fill="#FBF8F1" />
-        <text x="120" y="46" textAnchor="middle" fontFamily="Fraunces, serif" fontWeight="700" fontSize="24" fill="#2F4A34">March</text>
+        <text x="120" y="46" textAnchor="middle" fontFamily="'Fraunces Variable', Fraunces, serif" fontWeight="700" fontSize="24" fill="#2F4A34">March</text>
         <line x1="40" y1="60" x2="200" y2="60" stroke="#7C9A6E" strokeWidth="1.5" opacity=".5" />
         {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
           <text key={i} x={30 + i * 30} y="86" textAnchor="middle" fontSize="11" fontWeight="700" fill="#6B5B4B" fontFamily="Nunito Sans, sans-serif">{d}</text>

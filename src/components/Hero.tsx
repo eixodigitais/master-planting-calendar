@@ -26,6 +26,7 @@ export default function Hero() {
           <div className="mt-7 lg:hidden">
             <ImageSlot
               file="hero-mockup.webp"
+              sizes="(min-width: 1024px) 512px, calc(100vw - 32px)"
               ratio="4/3"
               eager
               alt="The Master Planting Calendar printed and open to a month, with a phone showing the cover, on a wooden table with seedlings"
@@ -54,6 +55,7 @@ export default function Hero() {
         <div className="hidden lg:block">
           <ImageSlot
             file="hero-mockup.webp"
+              sizes="(min-width: 1024px) 512px, calc(100vw - 32px)"
             ratio="4/3"
             eager
             alt="The Master Planting Calendar printed and open to a month, with a phone showing the cover, on a wooden table with seedlings"

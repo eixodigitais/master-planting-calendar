@@ -1,6 +1,7 @@
 import { useRef, useState, type ReactNode } from "react";
 import { H2, ImageSlot, Section } from "./ui";
 import KeyDates from "./KeyDates";
+import { IMAGES } from "../images";
 import Lightbox from "./Lightbox";
 
 type Item = { icon: string; title: string; body: ReactNode; file: string; alt: string; desc: string; fallback?: ReactNode };
@@ -16,7 +17,7 @@ const items: Item[] = [
 function ShowCard({ item, onOpen, className = "" }: { item: Item; onOpen: (i: Item) => void; className?: string }) {
   const [ok, setOk] = useState(false);
   const media = (
-    <ImageSlot file={item.file} alt={item.alt} ratio="3/4" desc={item.desc} fallback={item.fallback} onStatus={setOk} className="rounded-b-none" />
+    <ImageSlot file={item.file} alt={item.alt} ratio="3/4" desc={item.desc} fallback={item.fallback} onStatus={setOk} sizes="(min-width: 768px) 352px, calc(100vw - 32px)" className="rounded-b-none" />
   );
   return (
     <article className={`card card-lift flex w-full shrink-0 snap-center snap-always flex-col overflow-hidden md:col-span-2 md:w-auto ${className}`}>
@@ -93,7 +94,7 @@ export default function Showcase() {
         ))}
       </div>
 
-      {open && <Lightbox src={`/images/${open.file}`} alt={open.alt} onClose={() => setOpen(null)} />}
+      {open && <Lightbox src={IMAGES[open.file]?.src ?? ""} alt={open.alt} onClose={() => setOpen(null)} />}
     </Section>
   );
 }

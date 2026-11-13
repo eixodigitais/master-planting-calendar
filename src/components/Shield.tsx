@@ -13,7 +13,7 @@ export default function Shield() {
       </defs>
       <path d="M100 6 L186 36 V 108 C 186 166, 148 206, 100 224 C 52 206, 14 166, 14 108 V 36 Z" fill="#2F4A34" />
       <path d="M100 20 L172 45 V 108 C 172 158, 140 192, 100 208 C 60 192, 28 158, 28 108 V 45 Z" fill="none" stroke="#D9A441" strokeWidth="3" />
-      <text x="100" y="98" textAnchor="middle" fontFamily="Fraunces, serif" fontWeight="800" fontSize="58" fill="#D9A441">7</text>
+      <text x="100" y="98" textAnchor="middle" fontFamily="'Fraunces Variable', Fraunces, serif" fontWeight="800" fontSize="58" fill="#D9A441">7</text>
       <text x="100" y="124" textAnchor="middle" fontFamily="Nunito Sans, sans-serif" fontWeight="800" fontSize="15" letterSpacing="2" fill="#F7F2E7">-DAY</text>
       <text x="100" y="146" textAnchor="middle" fontFamily="Nunito Sans, sans-serif" fontWeight="800" fontSize="13" letterSpacing="1.5" fill="#F7F2E7">GUARANTEE</text>
       <path d="M78 166 C 88 160, 112 160, 122 166" stroke="#7C9A6E" strokeWidth="2.5" fill="none" strokeLinecap="round" />

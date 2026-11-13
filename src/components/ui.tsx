@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ElementType, type ReactNode, type CSSProperties } from "react";
+import { IMAGES } from "../images";
 
 /* ---------- helpers ---------- */
 export const prefersReducedMotion = () =>
@@ -179,6 +180,7 @@ export function ImageSlot({
   fallback,
   onStatus,
   compact = false,
+  sizes,
 }: {
   file: string;
   alt: string;
@@ -189,35 +191,51 @@ export function ImageSlot({
   fallback?: ReactNode;
   onStatus?: (ok: boolean) => void;
   compact?: boolean;
+  sizes?: string;
 }) {
-  const [status, setStatus] = useState<"loading" | "ok" | "error">("loading");
+  const info = IMAGES[file];
+  const [status, setStatus] = useState<"loading" | "ok" | "error">(info ? "loading" : "error");
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const done = (ok: boolean) => {
+    setStatus(ok ? "ok" : "error");
+    onStatus?.(ok);
+  };
+  // The page is prerendered, so the image may finish loading before React hydrates
+  // and attaches onLoad/onError. Read its state once after mount.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete) done(img.naturalWidth > 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const visible = status === "ok" || (eager && status !== "error");
   return (
     <div className={`relative overflow-hidden rounded-[16px] ${className}`} style={{ aspectRatio: ratio }}>
       {status !== "ok" &&
         (fallback && status === "error" ? (
           <div className="absolute inset-0">{fallback}</div>
-        ) : (
+        ) : !eager ? (
           <div className={`placeholder absolute inset-0 flex flex-col items-center justify-center gap-1 text-center ${compact ? "p-1.5" : "p-4"}`}>
             <span className={`font-bold text-forest ${compact ? "break-all text-[10px] leading-tight" : "text-[12px]"}`}>{file}</span>
             {!compact && <span className="text-[11px] leading-snug text-bark">{desc}</span>}
           </div>
-        ))}
-      <img
-        src={`/images/${file}`}
-        alt={alt}
-        loading={eager ? "eager" : "lazy"}
-        decoding="async"
-        {...(eager ? { fetchpriority: "high" } : {})}
-        onLoad={() => {
-          setStatus("ok");
-          onStatus?.(true);
-        }}
-        onError={() => {
-          setStatus("error");
-          onStatus?.(false);
-        }}
-        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${status === "ok" ? "opacity-100" : "opacity-0"}`}
-      />
+        ) : null)}
+      {info && (
+        <img
+          ref={imgRef}
+          src={info.src}
+          srcSet={info.srcSet}
+          sizes={sizes}
+          width={info.width}
+          height={info.height}
+          alt={alt}
+          loading={eager ? "eager" : "lazy"}
+          decoding={eager ? "sync" : "async"}
+          {...(eager ? { fetchpriority: "high" } : {})}
+          onLoad={() => done(true)}
+          onError={() => done(false)}
+          className={`absolute inset-0 h-full w-full object-cover ${eager ? "" : "transition-opacity duration-500"} ${visible ? "opacity-100" : "opacity-0"}`}
+        />
+      )}
     </div>
   );
 }
