@@ -6,6 +6,21 @@ import { H2, Section } from "./ui";
 import Shield from "./Shield";
 import { trackCheckout, withUtm } from "../utm";
 
+const num = (p: string) => parseFloat(p.replace(/[^0-9.]/g, "")) || 0;
+const fmt = (n: number) => `$${Number.isInteger(n) ? n : n.toFixed(2)}`;
+const savings = num(PRICE_COMPLETE_ANCHOR) - num(PRICE_COMPLETE);
+const savingsPct = Math.round((savings / num(PRICE_COMPLETE_ANCHOR)) * 100);
+
+// Value stack shown in the Complete Plan card (product anchoring).
+const stack: [string, string][] = [
+  ["📅 Master Planting Calendar", PRICE_BASIC_ANCHOR],
+  ["🎁 Your Zone, Pre-Set", "$17"],
+  ["🎁 Seed Starting Made Simple", "$14"],
+  ["🎁 Raised Bed Blueprints", "$17"],
+  ["🎁 Garden Rescue Guide", "$12"],
+  ["🎁 From Garden to Table", "$14"],
+];
+
 function Locks() {
   return (
     <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm font-semibold text-bark">
@@ -39,9 +54,24 @@ export default function Plans() {
           </span>
           <h3 className="font-serif text-2xl font-extrabold text-forest sm:text-[1.7rem]">⭐ COMPLETE — MOST POPULAR</h3>
           <p className="mt-2 text-bark">Calendar + 5 bonuses · Lifetime access + updates</p>
-          <p className="mt-5 flex items-baseline justify-center gap-3">
-            <s className="text-xl text-bark">{PRICE_COMPLETE_ANCHOR}</s>
-            <strong className="font-serif text-5xl font-extrabold text-forest">{PRICE_COMPLETE}</strong>
+
+          <ul className="mt-5 divide-y divide-dashed divide-soil/15 rounded-[14px] border border-soil/10 bg-cream px-4 text-left">
+            {stack.map(([name, value]) => (
+              <li key={name} className="flex items-baseline justify-between gap-3 py-2.5">
+                <span className="text-[0.97rem] text-soil">{name}</span>
+                <s className="shrink-0 font-semibold text-bark">{value}</s>
+              </li>
+            ))}
+            <li className="flex items-baseline justify-between gap-3 py-3">
+              <strong className="text-forest">Total value</strong>
+              <s className="shrink-0 text-lg font-extrabold text-tomato">{PRICE_COMPLETE_ANCHOR}</s>
+            </li>
+          </ul>
+
+          <p className="mt-5 text-bark">Get everything today for just</p>
+          <p className="font-serif text-6xl font-extrabold leading-none text-forest">{PRICE_COMPLETE}</p>
+          <p className="mt-3 inline-block rounded-full bg-leaf/10 px-4 py-1.5 text-[15px] font-extrabold text-leaf">
+            You save {fmt(savings)} — {savingsPct}% off
           </p>
           <a href={withUtm(CHECKOUT_COMPLETE)} onClick={(e) => trackCheckout(e, "Complete Plan", PRICE_COMPLETE)} className="btn-cta pulse mt-6 w-full">YES, I WANT THE COMPLETE PLAN →</a>
         </article>
